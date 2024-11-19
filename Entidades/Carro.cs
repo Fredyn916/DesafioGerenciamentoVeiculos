@@ -1,13 +1,18 @@
-﻿namespace Entidades;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace Entidades;
+
+[Table("Carros")]
 public class Carro : Veiculo
 {
     public string Tipo { get; set; }
 
-    public override void ExibirDetalhes()
+    public override string ExibirDetalhes()
     {
-        base.ExibirDetalhes();
-        Console.WriteLine($"Tipo: {Tipo}");
+        string mensagem = base.ExibirDetalhes();
+        mensagem += $"\nTipo: {Tipo}";
+
+        return mensagem;
     }
 
     public override double CalcularConsumo(double distancia)

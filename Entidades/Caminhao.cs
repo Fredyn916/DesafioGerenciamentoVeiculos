@@ -1,13 +1,18 @@
-﻿namespace Entidades;
+﻿using Dapper.Contrib.Extensions;
 
+namespace Entidades;
+
+[Table("Caminhoes")]
 public class Caminhao : Veiculo
 {
     public int CapacidaDeCarga { get; set; }
 
-    public override void ExibirDetalhes()
+    public override string ExibirDetalhes()
     {
-        base.ExibirDetalhes();
-        Console.WriteLine($"Capacidade de Carga: {CapacidaDeCarga}T");
+        string mensagem = base.ExibirDetalhes();
+        mensagem += $"\nCapacidade de Carga: {CapacidaDeCarga}T";
+
+        return mensagem;
     }
 
     public override double CalcularConsumo(double distancia)

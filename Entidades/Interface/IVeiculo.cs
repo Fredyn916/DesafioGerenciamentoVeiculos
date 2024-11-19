@@ -2,6 +2,6 @@
 
 public interface IVeiculo
 {
-    void ExibirDetalhes();
+    string ExibirDetalhes();
     double CalcularConsumo(double distancia);
 }
