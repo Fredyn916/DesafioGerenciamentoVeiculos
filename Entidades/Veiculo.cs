@@ -4,10 +4,12 @@ namespace Entidades;
 
 public class Veiculo : IVeiculo
 {
+    public int Id { get; set; }
     public string Modelo { get; set; }
     public int Ano { get; set; }
     public int CapacidadeDoTanque { get; set; }
     public double ConsumoPorKm { get; set; }
+    public int Categoria { get; set; }
 
     public virtual string ExibirDetalhes()
     {

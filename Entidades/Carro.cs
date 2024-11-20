@@ -2,7 +2,7 @@
 
 namespace Entidades;
 
-[Table("Carros")]
+[Table("Veiculos")]
 public class Carro : Veiculo
 {
     public string Tipo { get; set; }
