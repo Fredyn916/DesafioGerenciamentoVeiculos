@@ -2,7 +2,7 @@
 
 namespace Entidades.Interface;
 
-public interface IVeiculoRepository
+public interface IVeiculoService
 {
     Task Adicionar(CreateVeiculoDTO veiculo);
     Task<List<Veiculo>> Listar();

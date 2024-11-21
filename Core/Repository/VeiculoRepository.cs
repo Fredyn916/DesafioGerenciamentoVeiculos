@@ -8,7 +8,7 @@ using System.Data.SQLite;
 
 namespace Core.Repository;
 
-public class VeiculoRepository
+public class VeiculoRepository : IVeiculoRepository
 {
     private readonly string _ConnectionString;
     private readonly IMapper _Mapper;
@@ -26,59 +26,57 @@ public class VeiculoRepository
         if(veiculo.CapacidaDeCarga == null)
         {
             Carro carro = _Mapper.Map<Carro>(veiculo);
-            await connection.InsertAsync(veiculo);
+            veiculo.Categoria = 1;
+            await connection.InsertAsync<Veiculo>(veiculo);
         }
         else if (veiculo.Tipo == null)
         {
             Caminhao caminhao = _Mapper.Map<Caminhao>(veiculo);
-            await connection.InsertAsync(veiculo);
+            veiculo.Categoria = 2;
+            await connection.InsertAsync<Veiculo>(veiculo);
         }
     }
 
     public async Task<List<Veiculo>> Listar()
     {
-        List<Veiculo> veiculos = connection.GetAll<>().ToList();
+        using var connection = new SQLiteConnection(_ConnectionString);
+
+        List<Veiculo> veiculos = connection.GetAll<Veiculo>().ToList();
 
         return veiculos;
     }
 
-    public ReadFuncionarioDTO BuscarFuncionarioDTOPorId(int id)
+    public async Task<Veiculo> BuscarVeiculoPorId(int id)
     {
         using var connection = new SQLiteConnection(_ConnectionString);
 
-        Funcionario funcionario = connection.Get<Funcionario>(id);
-        ReadFuncionarioDTO funcionarioDTO = new ReadFuncionarioDTO();
+        Veiculo veiculo = connection.Get<Veiculo>(id);
 
-        funcionarioDTO.Id = funcionario.Id;
-        funcionarioDTO.Nome = funcionario.Nome;
-        funcionarioDTO.Idade = funcionario.Idade;
-        funcionarioDTO.Peso = funcionario.Peso;
-        funcionarioDTO.Salario = funcionario.Salario;
-        funcionarioDTO.Cargo = _Repository.BuscarCargoPorId(funcionario.CargoId);
-
-        return funcionarioDTO;
+        return veiculo;
     }
 
-    public Funcionario BuscarFuncionarioPorId(int id)
+    public async Task Editar(Veiculo veiculo)
     {
         using var connection = new SQLiteConnection(_ConnectionString);
 
-        return connection.Get<Funcionario>(id);
+        connection.Update<Veiculo>(veiculo);
     }
 
-    public void Editar(Funcionario editFuncionario)
+    public async Task Remover(int id)
     {
         using var connection = new SQLiteConnection(_ConnectionString);
 
-        connection.Update<Funcionario>(editFuncionario);
+        Veiculo veiculoToRemove = BuscarVeiculoPorIdPrivate(id);
+
+        connection.Delete<Veiculo>(veiculoToRemove);
     }
 
-    public void Remover(int id)
+    private Veiculo BuscarVeiculoPorIdPrivate(int id)
     {
         using var connection = new SQLiteConnection(_ConnectionString);
 
-        Funcionario funcionarioToRemove = BuscarFuncionarioPorId(id);
+        Veiculo veiculo = connection.Get<Veiculo>(id);
 
-        connection.Delete<Funcionario>(funcionarioToRemove);
+        return veiculo;
     }
 }

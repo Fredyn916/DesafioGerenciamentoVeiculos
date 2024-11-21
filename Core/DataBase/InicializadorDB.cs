@@ -10,8 +10,15 @@ public class InicializadorDB
 
     public static void Inicializar()
     {
-        using var connection = new SQLiteConnection("Data Source=GerenciamentoVeiculos.db"); // Criando a conexão
+        using var connection = new SQLiteConnection("Data Source=GerenciamentoVeiculos.db");
 
         connection.Execute(DataBaseScripts.CreateTables());
+
+        int categoriaCount = connection.QueryFirst<int>(DataBaseScripts.SelectCountAllCategorias());
+
+        if (categoriaCount == 0)
+        {
+            connection.Execute(DataBaseScripts.InsertCategorias());
+        }
     }
 }

@@ -1,5 +1,8 @@
 using Core.DataBase;
+using Core.Repository;
+using Core.Service;
 using Entidades.DTOs;
+using Entidades.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 InicializadorDB.Inicializar();
+
+builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+
+builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
 var app = builder.Build();
 
