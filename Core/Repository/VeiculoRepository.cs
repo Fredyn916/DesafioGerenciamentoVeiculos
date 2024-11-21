@@ -57,6 +57,24 @@ public class VeiculoRepository : IVeiculoRepository
         return veiculo;
     }
 
+    public async Task<string> ExibirDetalhesPorId(int id)
+    {
+        using var connection = new SQLiteConnection(_ConnectionString);
+
+        Veiculo veiculo = connection.Get<Veiculo>(id);
+
+        return veiculo.ExibirDetalhes();
+    }
+
+    public async Task<double> CalcularConsumoPorDistanciaDoVeiculoPeloId(int id, double distancia)
+    {
+        using var connection = new SQLiteConnection(_ConnectionString);
+
+        Veiculo veiculo = connection.Get<Veiculo>(id);
+
+        return veiculo.CalcularConsumo(distancia);
+    }
+
     public async Task Editar(Veiculo veiculo)
     {
         using var connection = new SQLiteConnection(_ConnectionString);

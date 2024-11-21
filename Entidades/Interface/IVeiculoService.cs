@@ -9,4 +9,6 @@ public interface IVeiculoService
     Task<Veiculo> BuscarVeiculoPorId(int id);
     Task Editar(Veiculo veiculo);
     Task Remover(int id);
+    Task<string> ExibirDetalhesPorId(int id);
+    Task<double> CalcularConsumoPorDistanciaDoVeiculoPeloId(int id, double distancia);
 }

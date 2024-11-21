@@ -55,6 +55,32 @@ public class VeiculoController : ControllerBase
         }
     }
 
+    [HttpGet("ExibirDetalhesPorId")]
+    public async Task<string> ExibirDetalhesPorId(int id)
+    {
+        try
+        {
+            return await _Service.ExibirDetalhesPorId(id);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
+    [HttpGet("CalcularConsumoPorDistanciaPeloId")]
+    public async Task<double> CalcularConsumoPorDistanciaDoVeiculoPeloId(int id, double distancia)
+    {
+        try
+        {
+            return await _Service.CalcularConsumoPorDistanciaDoVeiculoPeloId(id, distancia);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.Message);
+        }
+    }
+
     [HttpPut("EditarVeiculo")]
     public async Task Editar(Veiculo veiculo)
     {

@@ -1,6 +1,8 @@
-﻿using Entidades;
+﻿using Dapper.Contrib.Extensions;
+using Entidades;
 using Entidades.DTOs;
 using Entidades.Interface;
+using System.Data.SQLite;
 
 namespace Core.Service;
 
@@ -26,6 +28,16 @@ public class VeiculoService : IVeiculoService
     public async Task<Veiculo> BuscarVeiculoPorId(int id)
     {
         return await _Repository.BuscarVeiculoPorId(id);
+    }
+
+    public async Task<string> ExibirDetalhesPorId(int id)
+    {
+        return await _Repository.ExibirDetalhesPorId(id);
+    }
+
+    public async Task<double> CalcularConsumoPorDistanciaDoVeiculoPeloId(int id, double distancia)
+    {
+        return await _Repository.CalcularConsumoPorDistanciaDoVeiculoPeloId(id, distancia);
     }
 
     public async Task Editar(Veiculo veiculo)
