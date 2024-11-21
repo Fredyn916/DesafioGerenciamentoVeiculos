@@ -2,7 +2,6 @@
 
 namespace Entidades;
 
-[Table("Veiculos")]
 public class Caminhao : Veiculo
 {
     public int CapacidaDeCarga { get; set; }

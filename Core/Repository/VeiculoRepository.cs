@@ -19,21 +19,23 @@ public class VeiculoRepository : IVeiculoRepository
         _Mapper = mapper;
     }
 
-    public async Task Adicionar(CreateVeiculoDTO veiculo)
+    public async Task Adicionar(CreateVeiculoDTO createVeiculoDTO)
     {
         using var connection = new SQLiteConnection(_ConnectionString);
 
-        if(veiculo.CapacidaDeCarga == null)
+        AddVeiculoDTO addVeiculoDTO = _Mapper.Map<AddVeiculoDTO>(createVeiculoDTO);
+
+        if (addVeiculoDTO.CapacidaDeCarga == null)
         {
-            Carro carro = _Mapper.Map<Carro>(veiculo);
-            veiculo.Categoria = 1;
-            await connection.InsertAsync<Veiculo>(veiculo);
+            Carro carro = _Mapper.Map<Carro>(addVeiculoDTO);
+            carro.Categoria = 1;
+            await connection.InsertAsync<Veiculo>(carro);
         }
-        else if (veiculo.Tipo == null)
+        else if (addVeiculoDTO.Tipo == null)
         {
-            Caminhao caminhao = _Mapper.Map<Caminhao>(veiculo);
-            veiculo.Categoria = 2;
-            await connection.InsertAsync<Veiculo>(veiculo);
+            Caminhao caminhao = _Mapper.Map<Caminhao>(addVeiculoDTO);
+            caminhao.Categoria = 2;
+            await connection.InsertAsync<Veiculo>(caminhao);
         }
     }
 

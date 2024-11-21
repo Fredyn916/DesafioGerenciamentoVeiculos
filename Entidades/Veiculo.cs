@@ -1,7 +1,9 @@
 ﻿using Entidades.Interface;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entidades;
 
+[Table("Veiculos")]
 public class Veiculo : IVeiculo
 {
     public int Id { get; set; }
